@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.staticvoid.platformer.world.CustomGameMap;
 import com.staticvoid.platformer.world.GameMap;
+import com.staticvoid.platformer.world.TiledGameMap;
 
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
@@ -32,8 +33,10 @@ public class PlatformerGame extends ApplicationAdapter {
                 Gdx.graphics.getHeight());
         camera.update();
 
-        //	gameMap = new TiledGameMap();
-        gameMap = new CustomGameMap();
+
+
+        	gameMap = new TiledGameMap();
+        //gameMap = new CustomGameMap();
     }
 
     @Override

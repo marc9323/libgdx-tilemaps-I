@@ -13,11 +13,24 @@ public class Player extends Entity {
 
     Texture image;
 
+    // example data spawnRadius use snapshot to get properties
+   // float spawnRadius;
+
     // This is Player so we know EntityType is PLAYER.. just pass to super
-    public Player(float x, float y,
-                  GameMap map) {
-        super(x, y, EntityType.PLAYER, map);
+//    public Player(float x, float y,
+//                  GameMap map) {
+//        super(x, y, EntityType.PLAYER, map);
+//        image = new Texture("player.png");
+//    }
+//    public Player() {
+//        // image = new Texture("player.png");
+//    }
+
+    @Override
+    public void create(EntitySnapshot snapshot, EntityType type, GameMap map) {
+        super.create(snapshot, type, map);
         image = new Texture("player.png");
+      //  spawnRadius = snapshot.getFloat("spawnRadius", defaultValue);
     }
 
     @Override
@@ -27,6 +40,14 @@ public class Player extends Entity {
                 pos.x, pos.y,
                 getWidth(), getHeight()
         ); // just in case size is not same as specified in EntityType enum
+    }
+
+    @Override
+    public EntitySnapshot getSaveSnapshot() {
+         EntitySnapshot snapshot = super.getSaveSnapshot();
+        // now add on to it ...
+        // snapshot.putFloat("spawnRadius", spawnRadius);
+        return super.getSaveSnapshot();
     }
 
     @Override

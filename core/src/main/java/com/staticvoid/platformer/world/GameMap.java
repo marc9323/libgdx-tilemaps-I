@@ -1,8 +1,12 @@
 package com.staticvoid.platformer.world;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Logger;
 import com.staticvoid.platformer.entities.Entity;
+import com.staticvoid.platformer.entities.EntityLoader;
 import com.staticvoid.platformer.entities.Player;
 
 import java.util.ArrayList;
@@ -10,16 +14,25 @@ import java.util.ArrayList;
 
 public abstract class GameMap {
 
+    private static final Logger log =
+            new Logger(GameMap.class.getName(),
+                    Logger.DEBUG);
+
     protected ArrayList<Entity> entities; // TODO:  use badlogic Array?
 
     public GameMap() {
         entities = new ArrayList<Entity>();
-        entities.add(new Player(40, 450, this));
+
+        // TODO:  what is this empty array list doing when passed to loadEntities?
+        entities.addAll(EntityLoader.loadEntities("entities", this, entities));
+     //   entities.add(new Player(40, 450, this));
+      //  entities.addAll(EntityLoader.loadEntities("basic", this, entities));
     }
 
     public void render(OrthographicCamera camera, SpriteBatch batch) {
         // loop through entities and add them
         for(Entity entity : entities) {
+            log.debug("Entity to render: " + entity);
             entity.render(batch);
         }
     }
@@ -28,9 +41,16 @@ public abstract class GameMap {
         for(Entity entity : entities) {
             entity.update(deltaTime, -9.8f); // TODO: use a constant!
         }
+
+        // Hit 'S' key to save state
+        if(Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            EntityLoader.saveEntities("basic", entities);
+        }
     }
 
-    public abstract void dispose();
+    public void dispose() {
+        // EntityLoader.saveEntities("basic", entities);
+    }
 
     /**
      * Gets a tile by pixel position within the game world at a specified layer

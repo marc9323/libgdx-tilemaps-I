@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.staticvoid.platformer.world.GameMap;
 
+import java.util.HashMap;
+
 public abstract class Entity {
 
     protected Vector2 pos; // x, y and math functions
@@ -12,12 +14,18 @@ public abstract class Entity {
     protected GameMap map; // access map for collision detection
     protected boolean grounded = false;
 
-    public Entity(float x, float y, EntityType type, GameMap map) {
-        this.pos = new Vector2(x, y);
+//    public Entity(float x, float y, EntityType type, GameMap map) {
+////        this.pos = new Vector2(x, y);
+////
+////        this.type = type;
+////        this.map = map;
+//       // this.grounded = grounded;
+//    }
 
+    public void create(EntitySnapshot snapshot, EntityType type, GameMap map) {
+        this.pos = new Vector2(snapshot.getX(), snapshot.getY());
         this.type = type;
         this.map = map;
-       // this.grounded = grounded;
     }
 
     public void update(float deltaTime, float gravity) {
@@ -49,6 +57,19 @@ public abstract class Entity {
         if(!map.doesRectCollideWithMap(newX, pos.y, getWidth(), getHeight())) {
             this.pos.x = newX; // no collision so do the move
         }
+    }
+
+    // use for games without jumping
+    protected void moveY(float amount) {
+        float newY = this.pos.y + amount;
+
+        if(!map.doesRectCollideWithMap(pos.x, newY, getWidth(), getHeight())) {
+            this.pos.y = newY;
+        }
+    }
+
+    public EntitySnapshot getSaveSnapshot() {
+        return new EntitySnapshot(type.getId(), pos.x, pos.y);
     }
 
     public Vector2 getPos() {
