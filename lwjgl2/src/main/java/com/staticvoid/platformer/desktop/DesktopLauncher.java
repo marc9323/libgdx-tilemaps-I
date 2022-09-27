@@ -18,8 +18,10 @@ public class DesktopLauncher {
 	private static LwjglApplicationConfiguration getDefaultConfiguration() {
 		LwjglApplicationConfiguration configuration = new LwjglApplicationConfiguration();
 		configuration.title = "HollowBitPlatformer";
-		configuration.width = 640;
-		configuration.height = 480;
+//		configuration.width = 640;
+//		configuration.height = 480;
+		configuration.width = 800;
+		configuration.height = 600;
 		//// This prevents a confusing error that would appear after exiting normally.
 		configuration.forceExit = false;
 

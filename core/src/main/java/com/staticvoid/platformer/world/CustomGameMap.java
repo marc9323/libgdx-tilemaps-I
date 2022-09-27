@@ -19,7 +19,7 @@ public class CustomGameMap extends GameMap{
     int[][][] map;
 
     // SpriteBatch ... load tile images
-    private SpriteBatch batch;
+  //  private SpriteBatch batch;
     private TextureRegion[][] tiles;
 
     public CustomGameMap() {
@@ -29,14 +29,14 @@ public class CustomGameMap extends GameMap{
         this.name = data.name;
         this.map = data.map;
 
-        batch = new SpriteBatch();
+    //    batch = new SpriteBatch();
         // split up the tiles.png tile sheet into a 2D array : 17:40
         tiles = TextureRegion.split(new Texture("tiles.png"),
                 TileType.TILE_SIZE, TileType.TILE_SIZE);
     }
 
     @Override
-    public void render(OrthographicCamera camera) {
+    public void render(OrthographicCamera camera, SpriteBatch batch) {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
@@ -62,17 +62,18 @@ public class CustomGameMap extends GameMap{
             }
         }
 
+        super.render(camera, batch);
         batch.end();
     }
 
     @Override
     public void update(float deltaTime) {
-
+        super.update(deltaTime);
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
+       // batch.dispose();
     }
 
     // by Tile pixel locations, not by Tile coordinate
