@@ -1,0 +1,8 @@
+[
+{
+	class: com.staticvoid.platformer.entities.EntitySnapshot
+	type: player
+	x: 280.67233
+	y: 480
+}
+]
